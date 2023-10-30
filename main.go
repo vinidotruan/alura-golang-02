@@ -30,6 +30,15 @@ func (account *BankAccount) deposit(value float64) (string, float64) {
 
 }
 
+func (account *BankAccount) transfer(value float64, destinationAccount *BankAccount) bool {
+	if value < account.balance && value > 0 {
+		account.balance -= value
+		destinationAccount.balance += value
+		return true
+	}
+	return false
+}
+
 func main() {
 	bankAccount := BankAccount{
 		"Ruan",
@@ -38,7 +47,15 @@ func main() {
 		200.00,
 	}
 
+	bankAccount2 := BankAccount{
+		"Ruan 2",
+		001,
+		564,
+		300.,
+	}
+
 	fmt.Println(bankAccount.withdraw(100))
 	fmt.Println(bankAccount.balance)
 	fmt.Println(bankAccount.deposit(100))
+	fmt.Println(bankAccount2.transfer(100, &bankAccount))
 }
